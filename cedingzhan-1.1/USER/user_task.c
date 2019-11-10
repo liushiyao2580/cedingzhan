@@ -20,7 +20,7 @@ History: modified history.
 #include "iwdg.h"
 #include "cJSON.h"
 
-
+//test github
 
 static double weight[100];//Save the last 100 times of weight data after power on
 volatile int weight_count = 0;//Weight data count
