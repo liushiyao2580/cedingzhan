@@ -1,0 +1,35 @@
+#!/bin/sh
+echo 
+echo "====================Start====================="
+PROJECT_PATH=./USER
+BUILD_TOOL=/d/UV4/UV4.exe
+
+echo "\033[33m PROJECT_PATH:\033[0m $PROJECT_PATH"
+echo "\033[33m BUILD_TOOL:\033[0m $BUILD_TOOL"
+echo 
+
+cd $PROJECT_PATH
+echo "\033[33m Note:\033[0m Path is $(pwd) now..."
+PROJECT_NAME=$(ls | grep .uvprojx)
+
+if [ $PROJECT_NAME ];then
+echo "\033[33m Note:\033[0m Find project name is $PROJECT_NAME!"
+else
+echo "\033[31m Error:\033[0mCan not find project, Please check Path !"
+exit
+fi
+
+echo "\033[32m Build:\033[0m $PROJECT_NAME"
+rm ./Build_Output.txt
+touch ./Build_Output.txt
+
+if [ "$1"x = "all"x ];then
+echo "Rebuild All !!!"
+$BUILD_TOOL -r $PROJECT_NAME -o ./Build_Output.txt -j0
+else
+$BUILD_TOOL -b $PROJECT_NAME -o ./Build_Output.txt -j0
+fi
+
+cat ./Build_Output.txt | perl -pe 's/(warning)|(error)|(Error)|(Warning)/\e[1;33m$1\e[0m\e[1;33m$2\e[0m\e[1;31m$3\e[0m\e[1;31m$4\e[0m/g' 
+echo "=====================End====================="
+echo 

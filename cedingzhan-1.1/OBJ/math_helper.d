@@ -1,0 +1,10 @@
+..\obj\math_helper.o: ..\HARDWARE\WEIGHT\DSP_Lib\math_helper.c
+..\obj\math_helper.o: D:\ARM\ARMCC\Bin\..\include\math.h
+..\obj\math_helper.o: ..\HARDWARE\WEIGHT\DSP_Lib\Include\math_helper.h
+..\obj\math_helper.o: ..\HARDWARE\WEIGHT\DSP_Lib\Include\arm_math.h
+..\obj\math_helper.o: ..\HARDWARE\WEIGHT\DSP_Lib\Include\core_cm4.h
+..\obj\math_helper.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\math_helper.o: ..\CORE\core_cmInstr.h
+..\obj\math_helper.o: ..\CORE\core_cmFunc.h
+..\obj\math_helper.o: ..\CORE\core_cm4_simd.h
+..\obj\math_helper.o: D:\ARM\ARMCC\Bin\..\include\string.h
