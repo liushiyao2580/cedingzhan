@@ -25,6 +25,7 @@
 #define ID_SCREEN_FODDER_CALIBRATION_PAGE (9) //饲料秤标定页
 #define ID_SCREEN_WEIGHT_CALIBRATION_PAGE (10)  //体重秤标定页
 #define ID_SCREEN_WEIGHT_TEST_PAGE        (11)  //称重测试页
+#define ID_SCREEN_TIP_PAGE                (12) //提示页面
 
 
 //通知类型

@@ -170,11 +170,14 @@ void NotifyScreen(uint16 screen_id)
 		SetTextValue(ID_SCREEN_FODDER_CALIBRATION_PAGE, 11, GetString(StrIndex_process));
         SetTextValue(ID_SCREEN_FODDER_CALIBRATION_PAGE, 33, GetString(StrIndex_process_real));
     }
-
+    if (current_screen_id == ID_SCREEN_CALIBRATION_PAGE) {
+        k=0;
+	}
+	
 	if (current_screen_id == ID_SCREEN_WEIGHT_CALIBRATION_PAGE) {
 		char str[10];
 		M_ALL = 0;
-	    k = 0;
+	 //   k = 0;
 	    sprintf(str,"%d",pEdata->m1);
 		SetTextValue(ID_SCREEN_WEIGHT_CALIBRATION_PAGE, 12, str);
 		SetTextValue(ID_SCREEN_WEIGHT_CALIBRATION_PAGE, 1, GetString(StrIndex_0));
@@ -484,6 +487,15 @@ void NotifyButton(uint16 screen_id, uint16 control_id, uint8  state)
             dWeight_data_get(2);
             break;
 
+		case 4://退出判断
+		    if(k!=0){
+           SetScreen(ID_SCREEN_TIP_PAGE);//未完成标定回到提示页面
+			}
+			else{
+		   SetScreen(ID_SCREEN_CALIBRATION_PAGE);//完成标定则跳转上一页
+				}
+            break;
+			
         default:
             break;
         }
@@ -515,6 +527,11 @@ void NotifyButton(uint16 screen_id, uint16 control_id, uint8  state)
 		   
 	   }
 	  }
+	 //  if (screen_id == ID_SCREEN_TIP_PAGE) {
+	//	if (control_id = 4 && state == 0){
+	//		 SetScreen(ID_SCREEN_WEIGHT_CALIBRATION_PAGE);//取消则回到原页面
+	//	}
+   // }
 }
 
 /*!
