@@ -432,7 +432,8 @@ void vWork_task(void *pvParameters)
     uint16_t S_WEIGHT = 0;           //Feed weight(g)
     uint8_t DATE_D[2] = {12, 12};    //month day
     uint8_t DATE_T[2] = {12, 12};    //hour minute
-    uint8_t Fodder_time = 0;         
+    uint8_t Fodder_time = 0;  
+	uint8_t times=0;
 	EventBits_t eventbit = 0;
 
     for (;;) {
@@ -787,7 +788,12 @@ void vWork_task(void *pvParameters)
                     vMotor_run(eNORMAL);
 
                     while (dFodder_data_get() < pEdata->fodderweight) {
-                        vTaskDelay(1000);
+						vTaskDelay(1000);
+                        if(times++==20){
+                         eDevice_Status=ERR_MOTOR_SENSOR;
+						 vPower_off();
+						 break;
+						}						
                     }
 
                     vMotor_stop(eNORMAL);
