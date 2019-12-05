@@ -12,8 +12,8 @@
 
 //波特率=Fpclk1/((tbs1+1+tbs2+1+1)*brp);
 //mode:CAN_Mode_Normal,普通模式;CAN_Mode_LoopBack,回环模式;
-//Fpclk1的时钟在初始化的时候设置为42M,如果设置CAN1_Mode_Init(CAN_SJW_1tq,CAN_BS2_6tq,CAN_BS1_7tq,6,CAN_Mode_LoopBack);
-//则波特率为:42M/((6+7+1)*12)=250Kbps
+//Fpclk1的时钟在初始化的时候设置为42M,如果设置CAN1_Mode_Init(CAN_SJW_1tq,CAN_BS2_6tq,CAN_BS1_7tq,24,CAN_Mode_LoopBack);
+//则波特率为:42M/((6+7+1)*24)=125Kbps
 //返回值:0,初始化OK;
 //    其他,初始化失败;
 
