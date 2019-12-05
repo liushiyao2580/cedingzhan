@@ -107,7 +107,7 @@ void vLoad_weight_correction(int k)
     tmp[2] = prvLoad_avg_data(channel_3, 200);
     tmp[3] = prvLoad_avg_data(channel_4, 200);
     DEBUG_MSG(printf("channel_1 :%.2lf\tchannel_2 :%.2lf\tchannel_3 :%.2lf\tchannel_4 :%.2lf\t \r\n", tmp[0], tmp[1], tmp[2], tmp[3]));
-
+ if ( k != 4 ){
     switch (k) {
     case 0: a[0] = tmp[0]; a[1] = tmp[1]; a[2] = tmp[2]; a[3] = tmp[3]; break;
 
@@ -159,7 +159,7 @@ void vLoad_weight_correction(int k)
          DEBUG_MSG(printf("\r\nThe Sensor_correction result is :\r\nk1: %.6lf\r\nk2: %.6lf\r\nk3: %.6lf\r\nk4: %.6lf\r\n", k1, k2, k3, k4));
 
     }
-
+ }
     if (k == 4) {
         double res;
         res = 0.0;
