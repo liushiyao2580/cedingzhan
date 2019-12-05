@@ -85,8 +85,8 @@ int main(void)
     /*Initialize the status light and alarm light ports*/
     vLed_init();
 
-    /*Initialize CAN bus baud rate at 250Kbps*/
-    vCan1_mode_init(CAN_SJW_1tq, CAN_BS2_6tq, CAN_BS1_7tq, 12, CAN_Mode_Normal, pEdata->can_id);
+    /*Initialize CAN bus baud rate at 125Kbps*/
+    vCan1_mode_init(CAN_SJW_1tq, CAN_BS2_6tq, CAN_BS1_7tq, 24, CAN_Mode_Normal, pEdata->can_id);
 
     /*Initialize the weighing system*/
     vLoad_sys_init();
