@@ -553,7 +553,7 @@ void NotifyText(uint16 screen_id, uint16 control_id, uint8 *str)
         pEdata->can_id = value;
         vPush_one_eedata(eCANID_ADDR, pEdata->can_id);/* 更新EEPROM */
 
-        vCan1_mode_init(CAN_SJW_1tq, CAN_BS2_6tq, CAN_BS1_7tq, 12, CAN_Mode_Normal, pEdata->can_id);
+        vCan1_mode_init(CAN_SJW_1tq, CAN_BS2_6tq, CAN_BS1_7tq, 24, CAN_Mode_Normal, pEdata->can_id);
         DEBUG_MSG(vUsart_report_msg("setID:%ld", pEdata->can_id));
     }
 
