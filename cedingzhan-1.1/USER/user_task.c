@@ -719,7 +719,7 @@ void vWork_task(void *pvParameters)
                 SetTextValue(ID_SCREEN_MAIN_PAGE, 6, GetString(StrIndex_weighing));
 
                 /* 称重 */
-                T_WEIGHT = 100 * dWeight_data_get(0);
+                T_WEIGHT = 100 * dWeight_data_get(1);
 
                 FEEDING_DOOR_OPEN;//打开采食门
 
