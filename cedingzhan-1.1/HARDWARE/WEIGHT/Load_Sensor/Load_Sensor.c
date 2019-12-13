@@ -360,7 +360,7 @@ double dWeight_data_get(int mode)
         	SetTextValue(ID_SCREEN_MAIN_PAGE, 6, str);
             	} 
 				if(pEdata->mode == 1){//训练模式显示耳标号
-			sprintf(str, "%ld is feeding", store_era);
+			sprintf(str, "%ld is feeding-%6.2f %c", store_era,avg, img[c]);
         	SetTextValue(ID_SCREEN_MAIN_PAGE, 6, str);
             	}
         }
