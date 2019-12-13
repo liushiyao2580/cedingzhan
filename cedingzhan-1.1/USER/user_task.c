@@ -25,6 +25,7 @@ History: modified history.
 static double weight[100];//Save the last 100 times of weight data after power on
 volatile int weight_count = 0;//Weight data count
 static volatile int pig_eat_status = 0;//Pig feeding signs
+volatile uint64_t store_era=0; 
 
 static sData upload_data = {
     .earid = "999999999999",
@@ -714,7 +715,7 @@ void vWork_task(void *pvParameters)
 
                     vTaskDelay(1000);
                 }
-
+               store_era=EB_NUM;
                 SetTextValue(ID_SCREEN_MAIN_PAGE, 6, GetString(StrIndex_weighing));
 
                 /* 称重 */
@@ -766,7 +767,7 @@ void vWork_task(void *pvParameters)
                     if (FR_OK == f_open(file, str, FA_OPEN_APPEND | FA_WRITE)) {
                         sprintf(str, "%2d.%-2d-%02d:%02d;%2d;%4d;%6.2f;\n", \
                                 DATE_D[0], DATE_D[1], DATE_T[0], DATE_T[1], \
-                                Fodder_time, S_WEIGHT, upload_data.weight);
+                                Fodder_time, S_WEIGHT,T_WEIGHT);
                         f_printf(file, "%s", str);
                         f_close(file);
                     }
@@ -775,7 +776,7 @@ void vWork_task(void *pvParameters)
                     SetTextValue(ID_SCREEN_MAIN_PAGE, 9, str);
                     sprintf(str, "%ld", S_WEIGHT);
                     SetTextValue(ID_SCREEN_MAIN_PAGE, 17, str);
-                    sprintf(str, "%.1f", upload_data.weight);
+                    sprintf(str, "%.1f",T_WEIGHT);
                     SetTextValue(ID_SCREEN_MAIN_PAGE, 11, str);
                 }
 
@@ -1368,6 +1369,7 @@ static void vWork_task_add_fodder(float *last_fodder_weight)
 	CONTROL_liaodou_OUT(CTL_ON);//放下料斗
 	vTaskDelay(4000);//
 	xEventGroupWaitBits(EventGroupHandler, TUOJIA_ON, pdTRUE, pdTRUE, 5000); //等待料斗放下
+    vTaskDelay(4000);//料斗抖动4秒
 
 	*last_fodder_weight = dFodder_data_get();
 	
@@ -1390,7 +1392,7 @@ static void vWork_task_add_fodder(float *last_fodder_weight)
 		}
 	
 		vMotor_stop(eNORMAL);
-		vTaskDelay(2000);
+		vTaskDelay(4000);
 		*last_fodder_weight = dFodder_data_get();
 		DEBUG_MSG(vUsart_report_msg("dFodder ok %.1f", *last_fodder_weight));
 	}
