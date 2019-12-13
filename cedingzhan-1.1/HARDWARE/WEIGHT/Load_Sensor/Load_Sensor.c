@@ -15,6 +15,7 @@ static double temp1, temp2, temp3, temp4, temp5;//皮重
 static double k1, k2, k3, k4, k5, kw; //系数
 static int M1, M2;//标定砝码重量 
 volatile int M_ALL;//M_ALL用于整体标定
+extern volatile uint64_t store_era;
 /**
   * @brief  称重系统初始化
   * @param
@@ -354,8 +355,14 @@ double dWeight_data_get(int mode)
         avg /= 5;
 
 		if (current_screen_id == ID_SCREEN_MAIN_PAGE) {
-        	sprintf(str, " %6.2f %c", avg, img[c]);
+            if(pEdata->mode == 0){//测定模式显示当前体重
+			sprintf(str, " %6.2f %c", avg, img[c]);
         	SetTextValue(ID_SCREEN_MAIN_PAGE, 6, str);
+            	} 
+				if(pEdata->mode == 1){//训练模式显示耳标号
+			sprintf(str, "%ld is feeding", store_era);
+        	SetTextValue(ID_SCREEN_MAIN_PAGE, 6, str);
+            	}
         }
 
 		
