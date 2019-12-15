@@ -488,7 +488,7 @@ void vWork_task(void *pvParameters)
 					/* 称重次数记录，每100次更新一次均重 */
                     weight[weight_count++] = T_WEIGHT;
 
-                    if (weight_count % 20 == 0) {
+                    if (weight_count % 100 == 0) {
                         double min_w, max_w;
                         weight_count = 0;
                         max_w = min_w = weight[0];
@@ -790,7 +790,7 @@ void vWork_task(void *pvParameters)
 
                     while (dFodder_data_get() < pEdata->fodderweight) {
 						vTaskDelay(1000);
-                        if(times++==20){
+                        if(times++==200){
                          eDevice_Status=ERR_MOTOR_SENSOR;
 						 vPower_off();
 						 break;
