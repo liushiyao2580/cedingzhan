@@ -602,6 +602,7 @@ void vWork_task(void *pvParameters)
 							}
 						}
 					}
+					vTaskDelay(2000);//清零过后等待料斗稳定2S
                 	}
 	   				else{
 	   					sprintf(upload_data.end_time, "%02d%02d%02d%02d%02d%02d", \
