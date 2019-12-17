@@ -429,6 +429,7 @@ static void vWork_task_wait_pig_enter(void);
 void vWork_task(void *pvParameters)
 {
     uint64_t EB_NUM = 0;             //ear tag
+    uint64_t STORE_ER=0;             //store ear tag
     float T_WEIGHT = 0;              //weight(0.01kg)
     uint16_t S_WEIGHT = 0;           //Feed weight(g)
     uint8_t DATE_D[2] = {12, 12};    //month day
@@ -508,10 +509,17 @@ void vWork_task(void *pvParameters)
                         EB_NUM = 9999000 + pEdata->can_id;
                         vOpen_rfid();
                         if (1 == vGet_rfid_num(&EB_NUM)) {
-                            break;
+                            STORE_ER=EB_NUM;
+							if(1==vGet_rfid_num(&EB_NUM)){
+                             if(STORE_ER==EB_NUM){
+							 	if(EB_NUM>9000000){
+                                break;}
+							 }
+							}
                         }
                     }
 					if(0 == count_errbiao){
+						EB_NUM = 9999000 + pEdata->can_id;
                         eDevice_Status = ERR_RFID;
 					}
 					pig_eat_status = 1;
