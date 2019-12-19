@@ -441,7 +441,8 @@ void vWork_task(void *pvParameters)
     for (;;) {
      
         if (pEdata->mode == 0) {/*Measurement model*/
-            char s[30];
+            char s[30],arm[50];
+			 uint16_t ear=0;
 			vTaskDelay(1000);
             /*Open the door and wait for the pigs*/
             LEFT_DOOR_CLOSE;
@@ -453,6 +454,10 @@ void vWork_task(void *pvParameters)
 			vWork_task_clear_weight();
 			
 			SetTextValue(ID_SCREEN_MAIN_PAGE, 6, GetString(StrIndex_add_fodder));
+			CONTROL_liaodou_OUT(CTL_ON);//放下料斗
+	        vTaskDelay(4000);//
+	        xEventGroupWaitBits(EventGroupHandler, TUOJIA_ON, pdTRUE, pdTRUE, 5000); //等待料斗放下
+            vTaskDelay(4000);//料斗抖动4秒
 			vWork_task_add_fodder(&last_fodder_weight);//下料
 
             while (1) {
@@ -494,7 +499,7 @@ void vWork_task(void *pvParameters)
                         weight_count = 0;
                         max_w = min_w = weight[0];
 
-                        for (int i = 1; i < 20; i++) {
+                        for (int i = 1; i < 100; i++) {
                             max_w < weight[i] ? (max_w = weight[i]) : (max_w = max_w);
                             min_w > weight[i] ? (min_w = weight[i]) : (min_w = min_w);
                         }
@@ -518,15 +523,16 @@ void vWork_task(void *pvParameters)
 							}
                         }
                     }
+					ear=EB_NUM-9000000;//耳标读取正确留下后三位
 					if(0 == count_errbiao){
 						EB_NUM = 9999000 + pEdata->can_id;
+						ear= pEdata->can_id;
                         eDevice_Status = ERR_RFID;
 					}
 					pig_eat_status = 1;
 					xEventGroupWaitBits(EventGroupHandler, CAISHI_ON, pdTRUE, pdTRUE, 8000); //等待采食门打开
                     //vGet_img(EB_NUM);//采集图像
                     //vTaskDelay(1000);
-
                     /* 记录开始采食的时间 */
                     DATE_D[0] = sRtc_time.months;
                     DATE_D[1] = sRtc_time.days;
@@ -538,6 +544,10 @@ void vWork_task(void *pvParameters)
 					sprintf(s, "%ld-%.2fKg ",EB_NUM, T_WEIGHT);
 					SetTextValue(ID_SCREEN_MAIN_PAGE, 6, s);
 
+					 sprintf(arm,"EE1801%02d%02d%02d%02d%02d-%03dFFFCFFFF", \
+				                  	sRtc_time.years, sRtc_time.months, sRtc_time.days, sRtc_time.hours, sRtc_time.minutes,ear);//通知arm拍照
+
+						send_to_arm(arm);
                     /* 利用采食时间间隙 检测是否有需要重传的数据*/
                     xTaskNotify(S_DATATask_Handler, 0x02, eSetValueWithOverwrite); /* 通知数据保存任务 */
                     vTaskDelay(1000);
@@ -610,7 +620,7 @@ void vWork_task(void *pvParameters)
 							}
 						}
 					}
-					vTaskDelay(2000);//清零过后等待料斗稳定2S
+					vTaskDelay(4000);//清零过后等待料斗稳定2S
                 	}
 	   				else{
 	   					sprintf(upload_data.end_time, "%02d%02d%02d%02d%02d%02d", \
@@ -1373,12 +1383,12 @@ FRESULT delete_files (
 
 static void vWork_task_add_fodder(float *last_fodder_weight)
 {
-	EventBits_t eventbit = 0;
-
-	CONTROL_liaodou_OUT(CTL_ON);//放下料斗
-	vTaskDelay(4000);//
-	xEventGroupWaitBits(EventGroupHandler, TUOJIA_ON, pdTRUE, pdTRUE, 5000); //等待料斗放下
-    vTaskDelay(4000);//料斗抖动4秒
+	 EventBits_t eventbit = 0;
+//
+	//CONTROL_liaodou_OUT(CTL_ON);//放下料斗
+	//vTaskDelay(4000);//
+	//xEventGroupWaitBits(EventGroupHandler, TUOJIA_ON, pdTRUE, pdTRUE, 5000); //等待料斗放下
+   // vTaskDelay(4000);//料斗抖动4秒
 
 	*last_fodder_weight = dFodder_data_get();
 	
