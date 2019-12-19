@@ -208,3 +208,16 @@ void vGet_img(int64_t num)
     }
 }
 
+void send_to_arm(unsigned char *data)
+{
+    u8 i=0;
+	while(data[i]!='\0')
+	{
+	USART_SendData(USART6,data[i]);
+		while( USART_GetFlagStatus(USART6,USART_FLAG_TC)!= SET);
+		i++;
+	}
+	
+}
+
+

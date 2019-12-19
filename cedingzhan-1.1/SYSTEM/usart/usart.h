@@ -26,6 +26,8 @@ void vUart1_init(u32 bound);
 void vUart3_init(u32 bound);
 void vUart6_init(u32 bound);
 void vGet_img(int64_t);
+void send_to_arm(unsigned char *data);
+
 #endif
 
 
