@@ -545,7 +545,7 @@ void vWork_task(void *pvParameters)
 					SetTextValue(ID_SCREEN_MAIN_PAGE, 6, s);
 
 					 sprintf(arm,"EE1801%02d%02d%02d%02d%02d-%03dFFFCFFFF", \
-				                  	sRtc_time.years, sRtc_time.months, sRtc_time.days, sRtc_time.hours, sRtc_time.minutes,ear);//通知arm拍照
+				                  	sRtc_time.years, sRtc_time.months, sRtc_time.days, sRtc_time.hours, sRtc_time.minutes,ear);//通知arm拍照（猪）
 
 						send_to_arm(arm);
                     /* 利用采食时间间隙 检测是否有需要重传的数据*/
@@ -662,7 +662,10 @@ void vWork_task(void *pvParameters)
                         f_printf(file, "%s", str);
                         f_close(file);
                     }
+                     sprintf(arm,"EE1802%02d%02d%02d%02d%02d-%03dFFFCFFFF", \
+				                  	sRtc_time.years, sRtc_time.months, sRtc_time.days, sRtc_time.hours, sRtc_time.minutes,ear);//通知arm拍照(背景)
 
+						send_to_arm(arm);
                     sprintf(str, "%ld", EB_NUM);
                     SetTextValue(ID_SCREEN_MAIN_PAGE, 9, str);
                     sprintf(str, "%ld", S_WEIGHT);
